@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .Box{
+            height:450px;
+            width:500px;
+            border:1px light black;
+            margin-left: 400px;
+            border-radius: 20px;
+            background-color: lightcoral;
+            margin-top: 50px;
+        }
+        h2{
+            position: absolute;
+            top:0;
+            margin-top: 65px;
+            margin-left: 567px;
+            color: rgb(45, 20, 184);
+        }
+        .Line{
+            width:499px;
+            height:0px;
+            border: 1px solid rgb(45, 20, 184);
+            position: absolute;
+            top:0 ;
+            margin-top: 100px;
+            margin-left: 400px;
+        }
+        img{
+            position: absolute;
+            top:0;
+            height: 150px;
+            width: 150px;
+            margin-top: 130px;
+            margin-left: 570px;
+            color: lightcoral;
+        }
+        body{
+            background-color: lightskyblue;
+            background-image: url("Background Weather.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        #YYY{
+            position: absolute;
+            top:0;
+            margin-top: 300px;
+            height: 30px;
+            width: 230px;
+            margin-left: 525px;
+            font-size: 18px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bolder;
+            color: green;
+        }
+        button{
+            position: absolute;
+            top:0;
+            margin: 360px;
+            margin-left:593px;
+            border-radius: 14px;
+            height:40px;
+            width:120px;
+            background-color: lightseagreen;
+            font-size: 18px;
+            font-family:'Courier New', Courier, monospace ;
+            font-weight: bolder;
+            border: none;
+        }
+        #Result{
+            position: absolute;
+            top:0;
+            margin-top: 420px;
+            color: green;
+            font-size: 26px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bolder;
+            margin-left: 550px;
+            }
+        </style>
+</head>
+<body>
+    <h2>Weather App</h2>
+    <div class="Box"></div>
+    <div class="Line"></div>
+    <img src="Weather app.jpg">
+    <input type="text" id="YYY" placeholder="Enter City Name">
+    <button onclick="W()">Check Me</button>
+    <div id="Result"></div>
+
+    
+    
+    
+
+    <script>
+        async function W(){
+            const App = document.getElementById("YYY").value;
+            const apikey = `78a0c811d9ecfe5e75eafab60447ec04`;
+            const apicall = `https://api.openweathermap.org/data/2.5/weather?q=${App}&appid=${apikey}&units=metric`;            
+            try {
+                const response = await fetch(apicall);
+                if(!response.ok) throw new Error("City not found");
+
+                const data = await response.json();
+            
+            document.getElementById("Result").innerHTML = `
+            <h2>${data.name},${data.sys.country}</h2>
+            <p><b>Temp:</b>${data.main.temp}°C</P>
+            <p><b>Condition:</b> ${data.weather[0].description}</P>
+             `;
+            } catch (error){
+                document.getElementById("Result").innerHTML = `<p style="color:red;">${error.message}</p>`;
+            }
+        }
+             </script>
+    
+</body>
+</html>
